@@ -91,5 +91,14 @@ public class UC01RegistraEmprestimoDeLivro {
 		assertTrue(dataAtual.equals(dataEmprestimo));
 	}
 	
-	
+	@Test
+	public void CT09QuandoDataDevolucaoForDomingoErro(){
+		//cenário
+		String data = "06/05/2018";
+		Emprestimo umEmprestimo = new Emprestimo();
+		//ação
+		boolean ehDomingo = umEmprestimo.verificaDiaSemana(data);
+		//verificação
+		assertFalse(ehDomingo);
+	}
 }
