@@ -101,4 +101,69 @@ public class UC01RegistraEmprestimoDeLivro {
 		//verificação
 		assertFalse(ehDomingo);
 	}
+	
+	@Test
+	public void CT06QuandoInserirUmEmprestimoRetorna1(){
+		//cenário
+		Emprestimo umEmprestimo = new Emprestimo();
+		Usuario umUsuario = ObtemUsuario.comDadosValidos();
+		Livro umLivro = ObtemLivro.comDadosValidos();
+		ServicoEmprestimo servico = new ServicoEmprestimo();
+		umEmprestimo = servico.empresta(umLivro, umUsuario);
+		
+		EmprestimoDAO emprestimoDAO = new EmprestimoDAO();
+		//acao
+		boolean resultadoEsperado=emprestimoDAO.adiciona(umEmprestimo);
+		//verificacao
+		assertTrue(resultadoEsperado);
+	}
+	
+	@Test
+	public void CT07ConsultaRegistroComSucesso(){
+		//cenário
+		Emprestimo umEmprestimo = new Emprestimo();
+		Usuario umUsuario = ObtemUsuario.comDadosValidos();
+		Livro umLivro = ObtemLivro.comDadosValidos();
+		ServicoEmprestimo servico = new ServicoEmprestimo();
+		umEmprestimo = servico.empresta(umLivro, umUsuario);	
+		EmprestimoDAO emprestimoDAO = new EmprestimoDAO();
+		emprestimoDAO.adiciona(umEmprestimo);
+		
+		//insere 1 registro
+		umUsuario = ObtemUsuario.ListacomDadosValidos.get(1);
+		umEmprestimo = servico.empresta(umLivro, umUsuario);	
+		EmprestimoDAO emprestimoDAO1 = new EmprestimoDAO();
+		emprestimoDAO.adiciona(umEmprestimo);
+		
+		//insere 2 registro
+		umUsuario = ObtemUsuario.ListacomDadosValidos.get(2);
+		umEmprestimo = servico.empresta(umLivro, umUsuario);	
+		EmprestimoDAO emprestimoDAO2 = new EmprestimoDAO();
+		emprestimoDAO.adiciona(umEmprestimo);
+		
+		//insere 3 registro
+		umUsuario = ObtemUsuario.ListacomDadosValidos.get(3);
+		umEmprestimo = servico.empresta(umLivro, umUsuario);	
+		EmprestimoDAO emprestimoDAO3 = new EmprestimoDAO();
+		emprestimoDAO1.adiciona(umEmprestimo);
+		
+		//insere 4 registro
+		umUsuario = ObtemUsuario.ListacomDadosValidos.get(4);
+		umEmprestimo = servico.empresta(umLivro, umUsuario);	
+		EmprestimoDAO emprestimoDAO4 = new EmprestimoDAO();
+		emprestimoDAO4.adiciona(umEmprestimo);
+				
+		//acao
+		Emprestimo resultadoObtido = emprestimoDAO.consulta(umEmprestimo.getUsuario().getRa());
+		assertFalse(resultadoObtido.equals(umEmprestimo));
+	}
 }
+
+
+
+
+
+
+
+
+
